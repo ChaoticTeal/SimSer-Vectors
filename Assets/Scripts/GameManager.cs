@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     bool isTarget;
     // Did the shot hit?
     bool hit;
+    // Has the win requirement been met?
+    bool hasWon;
     // Reference to active target
     GameObject activeTarget;
     // Score
@@ -59,6 +61,13 @@ public class GameManager : MonoBehaviour
             HandleHit();
 	}
 
+    // If the win condition has been met, move to phase 2
+    void CheckWin()
+    {
+        if (score >= requiredScore)
+            hasWon = true;
+    }
+
     // Respond to a hit target
     void HandleHit()
     {
@@ -69,6 +78,8 @@ public class GameManager : MonoBehaviour
         // If the target exists (which it should, but check), destroy it
         if(activeTarget != null)
             Destroy(activeTarget);
+        // Check if the game has been completed
+        CheckWin();
     }
 
     // Respond to input

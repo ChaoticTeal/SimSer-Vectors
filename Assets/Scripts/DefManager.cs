@@ -26,7 +26,6 @@ public class DefManager : MonoBehaviour
 	void Start () 
 	{
         canGo = false;
-        goText.gameObject.SetActive(false);
         StartCoroutine(WaitToProceed());
 	}
 
@@ -49,7 +48,6 @@ public class DefManager : MonoBehaviour
     IEnumerator WaitToProceed()
     {
         yield return new WaitForSeconds(waitTime);
-        goText.gameObject.SetActive(true);
         while(goText.color != Color.white)
         {
             goText.color = Color.Lerp(goText.color, Color.white, fadeTime);
