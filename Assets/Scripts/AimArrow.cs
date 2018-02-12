@@ -49,14 +49,19 @@ public class AimArrow : MonoBehaviour
     // Fire the vector
     void Fire()
     {
+        // "Draw" a vector of the proper length
         slider.value = target.position.magnitude;
+        // Display data on drawn vector
         dataText.text = "Vector: <" + target.position.x / 2 + "," + target.position.y / 2 + ">\nMagnitude: " + target.position.magnitude +
             "\nDirection: " + (Vector2.SignedAngle(defaultPosition, target.position) + 90f) + "\u00B0";
+        // Cool down from vector drawing
         StartCoroutine(VectorCooldown());
     }
 
+    // Respond to input
     void HandleInput()
     {
+        // Fire if the left mouse button is clicked
         if (Input.GetMouseButtonDown(0))
             shouldFire = true;
         else
@@ -76,12 +81,18 @@ public class AimArrow : MonoBehaviour
             transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angleDifference));
     }
 
+    // After a vector is drawn, wait, then reset and continue movement
     IEnumerator VectorCooldown()
     {
+        // Activate cooldown
         cooldown = true;
+        // Wait for a set amount of time
         yield return new WaitForSeconds(delay);
+        // Deactivate cooldown
         cooldown = false;
+        // Hide vector data
         dataText.text = "";
+        // Hide vector
         slider.value = 0;
     }
 }
