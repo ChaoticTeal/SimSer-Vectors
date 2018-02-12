@@ -9,6 +9,8 @@ public class DefManager : MonoBehaviour
     // SerializeFields for assignment in-editor
     // Time before the user can proceed
     [SerializeField] float waitTime = 3f;
+    // Time for text to fade in
+    [SerializeField] float fadeTime = 1f;
     // Name of next scene
     [SerializeField] string nextScene = "Main";
     // Text to indicate how to proceed
@@ -48,6 +50,11 @@ public class DefManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         goText.gameObject.SetActive(true);
+        while(goText.color != Color.white)
+        {
+            goText.color = Color.Lerp(goText.color, Color.white, fadeTime);
+            yield return null;
+        }
         canGo = true;
     }
 }
