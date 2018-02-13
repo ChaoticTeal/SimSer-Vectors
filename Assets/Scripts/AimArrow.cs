@@ -14,6 +14,8 @@ public class AimArrow : MonoBehaviour
     [SerializeField] Text dataText;
     // Target position
     [SerializeField] Transform target;
+    // Reference to audio for fire sound
+    [SerializeField] AudioSource audioSource;
 
     // Private fields
     // Has the vector just been drawn?
@@ -49,10 +51,12 @@ public class AimArrow : MonoBehaviour
     // Fire the vector
     void Fire()
     {
+        // Play fire sound
+        audioSource.Play();
         // "Draw" a vector of the proper length
         slider.value = target.position.magnitude;
         // Display data on drawn vector
-        dataText.text = "Vector: <" + target.position.x / 2 + "," + target.position.y / 2 + ">\nMagnitude: " + target.position.magnitude +
+        dataText.text = "Vector: <" + target.position.x / 2 + "," + target.position.y / 2 + ">\nMagnitude: " + target.position.magnitude/2 +
             "\nDirection: " + (Vector2.SignedAngle(defaultPosition, target.position) + 90f) + "\u00B0";
         // Cool down from vector drawing
         StartCoroutine(VectorCooldown());

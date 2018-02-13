@@ -19,6 +19,8 @@ public class DefManager : MonoBehaviour
     // Private fields
     // Has enough time passed to proceed?
     bool canGo;
+    // Should the text fade in?
+    bool fadeIn;
     // Has the player given input to proceed?
     bool shouldGo;
 
@@ -32,6 +34,8 @@ public class DefManager : MonoBehaviour
     private void Update()
     {
         HandleInput();
+        if (fadeIn)
+            goText.color = Color.Lerp(goText.color, Color.white, fadeTime * Time.deltaTime);
         if (canGo && shouldGo)
             SceneManager.LoadScene(nextScene);
     }
@@ -48,11 +52,8 @@ public class DefManager : MonoBehaviour
     IEnumerator WaitToProceed()
     {
         yield return new WaitForSeconds(waitTime);
-        while(goText.color != Color.white)
-        {
-            goText.color = Color.Lerp(goText.color, Color.white, fadeTime);
-            yield return null;
-        }
+        fadeIn = true;
+        yield return new WaitForSeconds(fadeTime);
         canGo = true;
     }
 }
